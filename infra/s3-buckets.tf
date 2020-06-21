@@ -16,7 +16,7 @@ resource "aws_iam_policy" "buckets-write" {
         "s3:PutObject"
     ],
     "Effect": "Allow",
-    "Resource": "${aws_s3_bucket.buckets.arn}/*",
+    "Resource": "${aws_s3_bucket.buckets.arn}/*"
     }
 ]
 }
@@ -36,7 +36,7 @@ resource "aws_iam_policy" "buckets-read" {
         "s3:GetObject"
     ],
     "Effect": "Allow",
-    "Resource": "${aws_s3_bucket.buckets.arn}/*",
+    "Resource": "${aws_s3_bucket.buckets.arn}/*"
     }
 ]
 }
