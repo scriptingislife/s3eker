@@ -45,17 +45,19 @@ resource "aws_iam_policy" "webhook-read" {
     description = "Allows reading the Slack webhook for the s3eker channel."
     policy = <<EOF
 {
-"Version": "2012-10-17",
-"Statement": [
-    {
-    "Sid": "VisualEditor0",
-    "Action": "secretsmanager:GetSecretValue",
-    "Effect": "Allow",
-    "Resource": "arn:aws:secretsmanager:us-east-1:358663747217:secret:s3ekerSlackWebhook-rrNAba",
+  "Version": "2012-10-17",
+  "Statement": {
+      "Action": "secretsmanager:GetSecretValue",
+      "Effect": "Allow",
+      "Resource": "arn:aws:secretsmanager:us-east-1:358663747217:secret:s3ekerSlackWebhook-rrNAba"
     }
-]
 }
     EOF
+}
+
+resource "aws_iam_role_policy_attachment" "attach-scan-webhook-read" {
+  role = aws_iam_role.exec_scan.name
+  policy_arn = aws_iam_policy.webhook-read
 }
 
 resource "aws_lambda_permission" "allow_bucket" {
