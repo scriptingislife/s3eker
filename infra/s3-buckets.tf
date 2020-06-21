@@ -8,17 +8,19 @@ resource "aws_iam_policy" "buckets-write" {
     description = "Allows writing to S3 bucket used for storing bucket domains."
     policy = <<EOF
     {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Sid": "VisualEditor0",
-                "Effect": "Allow",
-                "Action": [
-                    "s3:PutObject"
-                ],
-                "Resource": "${aws_s3_bucket.buckets.arn}/*"
-            }
-        ]
+    "Id": "Policy1592752777775",
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+        "Sid": "Stmt1592752776654",
+        "Action": [
+            "s3:PutObject"
+        ],
+        "Effect": "Allow",
+        "Resource": "${aws_s3_bucket.buckets.arn}/*",
+        "Principal": "*"
+        }
+    ]
     }
     EOF
 }
@@ -28,17 +30,19 @@ resource "aws_iam_policy" "buckets-read" {
     description = "Allows reading S3 bucket used for storing bucket domains."
     policy = <<EOF
     {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Sid": "VisualEditor0",
-                "Effect": "Allow",
-                "Action": [
-                    "s3:GetObject"
-                ],
-                "Resource": "${aws_s3_bucket.buckets.arn}/*"
-            }
-        ]
+    "Id": "Policy1592752777774",
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+        "Sid": "Stmt1592752776653",
+        "Action": [
+            "s3:GetObject"
+        ],
+        "Effect": "Allow",
+        "Resource": "${aws_s3_bucket.buckets.arn}/*",
+        "Principal": "*"
+        }
+    ]
     }
     EOF
 }
