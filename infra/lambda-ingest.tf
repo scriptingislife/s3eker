@@ -30,12 +30,12 @@ resource "aws_iam_role" "exec_ingest" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "attach-buckets-read" {
+resource "aws_iam_role_policy_attachment" "attach-ingest-buckets-read" {
     role = aws_iam_role.exec_ingest.name
     policy_arn = aws_iam_policy.buckets-read.arn
 }
 
-resource "aws_iam_role_policy_attachment" "attach-buckets-write" {
+resource "aws_iam_role_policy_attachment" "attach-ingest-buckets-write" {
     role = aws_iam_role.exec_ingest.name
     policy_arn = aws_iam_policy.buckets-write.arn
 }

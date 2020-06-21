@@ -30,7 +30,7 @@ resource "aws_iam_role" "exec_scan" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "attach-buckets-read" {
+resource "aws_iam_role_policy_attachment" "attach-scan-buckets-read" {
     role = aws_iam_role.exec_scan.name
     policy_arn = aws_iam_policy.buckets-read.arn
 }
