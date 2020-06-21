@@ -29,7 +29,7 @@ do
     ZIP_FILENAME="$FUNCTION_NAME.zip"
     ZIP_FILE="$DIST_DIR/$ZIP_FILENAME"
     
-    if zip "$ZIP_FILE"  ./*; then
+    if zip -r "$ZIP_FILE"  *; then
         echo "Successfully zipped $FUNCTION_NAME"
         aws s3 cp "$ZIP_FILE" "s3://$LAMBDA_BUCKET/$FUNCTION_NAME/$ZIP_FILENAME"
         aws lambda update-function-code --function-name "s3eker-$FUNCTION_NAME" --s3-bucket $LAMBDA_BUCKET --s3-key "$FUNCTION_NAME/$ZIP_FILENAME" > /dev/null
