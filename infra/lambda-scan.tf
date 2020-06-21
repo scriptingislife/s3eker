@@ -40,6 +40,24 @@ resource "aws_iam_role_policy_attachment" "attach-scan-buckets-read" {
     policy_arn = aws_iam_policy.buckets-read.arn
 }
 
+resource "aws_iam_policy" "webhook-read" {
+    name = "s3eker-webhook-read"
+    description = "Allows reading the Slack webhook for the s3eker channel."
+    policy = <<EOF
+{
+"Version": "2012-10-17",
+"Statement": [
+    {
+    "Sid": "VisualEditor0",
+    "Action": "secretsmanager:GetSecretValue",
+    "Effect": "Allow",
+    "Resource": "arn:aws:secretsmanager:us-east-1:358663747217:secret:s3ekerSlackWebhook-rrNAba",
+    }
+]
+}
+    EOF
+}
+
 resource "aws_lambda_permission" "allow_bucket" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
