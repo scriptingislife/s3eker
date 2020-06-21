@@ -37,7 +37,10 @@ resource "aws_iam_policy" "buckets-read" {
         "s3:ListBucket"
     ],
     "Effect": "Allow",
-    "Resource": "${aws_s3_bucket.buckets.arn}/*"
+    "Resource": [
+        "${aws_s3_bucket.buckets.arn}",
+        "${aws_s3_bucket.buckets.arn}/*"
+    ]
     }
 ]
 }
