@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "ingest" {
     function_name   = "s3eker-ingest"
     s3_bucket       = var.test_boi
-    s3_key          = "ingest/lambda.zip"
+    s3_key          = "ingest/ingest.zip"
 
     memory_size     = 128
     timeout         = 15
