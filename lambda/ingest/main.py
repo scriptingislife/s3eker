@@ -4,7 +4,7 @@ from boto3 import client
 from boto.s3.key import Key
 import botocore
 
-def main():
+def main(event, context):
     # Gather URLScan.io results for scans with a request to s3-website domains.
     req_results = requests.get("https://urlscan.io/api/v1/search/?q=domain:s3-website-us-east-1.amazonaws.com&size=20")
     if req_results.status_code != 200:
@@ -50,4 +50,4 @@ def create_key(bucket, key):
 
 
 if __name__ == "__main__":
-    main()
+    main(None, None)
