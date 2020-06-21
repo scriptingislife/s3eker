@@ -57,7 +57,7 @@ resource "aws_iam_policy" "webhook-read" {
 
 resource "aws_iam_role_policy_attachment" "attach-scan-webhook-read" {
   role = aws_iam_role.exec_scan.name
-  policy_arn = aws_iam_policy.webhook-read
+  policy_arn = aws_iam_policy.webhook-read.arn
 }
 
 resource "aws_lambda_permission" "allow_bucket" {
