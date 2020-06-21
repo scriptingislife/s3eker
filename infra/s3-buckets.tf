@@ -17,7 +17,6 @@ resource "aws_iam_policy" "buckets-write" {
     ],
     "Effect": "Allow",
     "Resource": "${aws_s3_bucket.buckets.arn}/*",
-    "Principal": "*"
     }
 ]
 }
@@ -38,7 +37,6 @@ resource "aws_iam_policy" "buckets-read" {
     ],
     "Effect": "Allow",
     "Resource": "${aws_s3_bucket.buckets.arn}/*",
-    "Principal": "*"
     }
 ]
 }
