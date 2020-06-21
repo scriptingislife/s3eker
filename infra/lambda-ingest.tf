@@ -39,3 +39,15 @@ resource "aws_iam_role_policy_attachment" "attach-ingest-buckets-write" {
     role = aws_iam_role.exec_ingest.name
     policy_arn = aws_iam_policy.buckets-write.arn
 }
+
+resource "aws_cloudwatch_event_rule" "fetch-interval" {
+  name = "s3eker-fetch-interval"
+  description = "Time interval to trigger s3eker fetch Lambda."
+  schedule_expression = "rate(1 hour)"
+}
+
+resource "aws_cloudwatch_event_target" "fetch-interval" {
+  rule = aws_cloudwatch_event_rule.fetch-interval.name
+  target_id = "s3eker-ingest"
+  arn = aws_lambda_function.ingest.arn
+}
