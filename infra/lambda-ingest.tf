@@ -30,6 +30,11 @@ resource "aws_iam_role" "exec_ingest" {
 EOF
 }
 
+resource "aws_iam_role_policy_attachment" "attach-ingest-lambda-execute" {
+  role = aws_iam_role.exec_ingest.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
 resource "aws_iam_role_policy_attachment" "attach-ingest-buckets-read" {
     role = aws_iam_role.exec_ingest.name
     policy_arn = aws_iam_policy.buckets-read.arn
