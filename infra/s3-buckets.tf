@@ -24,7 +24,7 @@ resource "aws_iam_policy" "buckets-write" {
 }
 
 resource "aws_iam_policy" "buckets-read" {
-    name = "s3eker-s3-buckets-write"
+    name = "s3eker-s3-buckets-read"
     description = "Allows reading S3 bucket used for storing bucket domains."
     policy = <<EOF
 {
