@@ -3,6 +3,6 @@ Find open S3 buckets by searching website source code. s3eker searches [urlscan.
 
 <img src="res/notif.png" alt="notification" width="200"/>
 
-s3eker runs on AWS and can be spun up using Terraform with the exception of a Secrets Manager entry for the Slack webhook. No API key is needed for urlscan.io. There are two serverless Lambda functions to run the searching and listing operations. A S3 bucket used to track previously seen buckets and to trigger the second Lambda. 
+s3eker runs on AWS and can be spun up using Terraform with the exception of a Secrets Manager entry for the Slack webhook. No API key is needed for urlscan.io. There are two serverless Lambda functions to run the searching and listing operations. The first Lambda is triggered by a CloudWatch event every hour. An S3 bucket is used to track previously seen domains and to trigger the second Lambda function. 
 
 <img src="res/s3eker.png" alt="diagram"/>
