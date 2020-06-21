@@ -33,7 +33,8 @@ resource "aws_iam_policy" "buckets-read" {
     {
     "Sid": "VisualEditor0",
     "Action": [
-        "s3:GetObject"
+        "s3:GetObject",
+        "s3:ListObjectsV2"
     ],
     "Effect": "Allow",
     "Resource": "${aws_s3_bucket.buckets.arn}/*"
