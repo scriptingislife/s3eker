@@ -4,7 +4,7 @@ resource "aws_lambda_function" "ingest" {
     s3_key          = "ingest/ingest.zip"
 
     memory_size     = 128
-    timeout         = 15
+    timeout         = 240
 
     handler         = "main"
     runtime         = "python3.7"
