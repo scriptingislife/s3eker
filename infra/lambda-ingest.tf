@@ -51,3 +51,11 @@ resource "aws_cloudwatch_event_target" "fetch-interval" {
   target_id = "s3eker-ingest"
   arn = aws_lambda_function.ingest.arn
 }
+
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_s3eker_ingest" {
+  statement_id = "AllowExecutionFromCloudWatch"
+    action = "lambda:InvokeFunction"
+    function_name = "${aws_lambda_function.ingest.function_name}"
+    principal = "events.amazonaws.com"
+    source_arn = "${aws_cloudwatch_event_rule.fetch-interval.arn}"
+}
