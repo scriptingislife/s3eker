@@ -1,7 +1,8 @@
 import logging
-from botocore.vendored import requests
+import requests
 import boto3
-from botocore.exception import InsufficientPermissionsException, ClientError
+import json
+from botocore.exceptions import ClientError
 import base64
 
 logging.basicConfig()
@@ -19,12 +20,15 @@ def main(event, context):
         logging.info(f"Bucket {target_bucket} is open!")
         
         webhook = get_secret()
-        response = requests.post(webhook, headers={'Content-type': 'application/json'}, data={"text": f"Bucket {target_bucket} is open!"})
+        response = requests.post(webhook, headers={'Content-type': 'application/json'}, data=json.dumps({"text": f"Bucket `{target_bucket}` is open!"}))
         if response.status_code != 200:
             logging.error(f"Slack returned status code {response.status_code}.")
 
-    except InsufficientPermissionsException:
-        logging.info(f"Permission denied for bucket {target_bucket}")
+    except ClientError as e:
+        if e.response['Error']['Code'] == "AccessDenied":
+            logging.info(f"Permission denied for bucket {target_bucket}")
+        else:
+            raise
 
 def get_secret():
 
@@ -77,4 +81,18 @@ def get_secret():
             
 
 if __name__ == "__main__":
-    main(None, None)
+    blah = {
+        'Records': [
+            {
+                's3': {
+                    'bucket': {
+                        'name': 'bloopy'
+                    },
+                    'object': {
+                        'key': 's3eker-open.s3-website-us-east-1.amazonaws.com'
+                    }
+                }
+            }
+        ]
+    }
+    main(blah, None)

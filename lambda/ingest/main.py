@@ -1,4 +1,4 @@
-from botocore.vendored import requests
+import requests
 import logging
 import boto3
 import botocore
