@@ -1,3 +1,7 @@
+
+🚧 Currently being revamped and I was dumb and didn't make a second branch 
+🚧
+
 # s3eker <img src="res/icon.png" alt="icon" width="32"/>
 Find open S3 buckets by searching website source code. s3eker searches [urlscan.io](https://urlscan.io) for websites that reach out to a `s3-website-us-east-1.amazonaws.com` subdomain. It will then attempt to list the contents of the bucket. If an open bucket is found it will alert via Slack. The theory being if a bucket is being used as a static site, it may have more relaxed permissions. Additional criteria and inputs may be added later.
 
