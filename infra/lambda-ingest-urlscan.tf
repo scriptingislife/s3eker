@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "ingest-urlscan" {
     function_name   = "s3eker-ingest-urlscan"
     s3_bucket       = var.lambda_bucket_name
-    s3_key          = "ingest-urlscan-urlscan/ingest-urlscan.zip"
+    s3_key          = "ingest-urlscan/ingest-urlscan.zip"
 
     memory_size     = 128
     timeout         = 240
