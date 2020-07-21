@@ -2,6 +2,7 @@ import requests
 import logging
 import boto3
 import botocore
+import json
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.INFO)
@@ -41,20 +42,12 @@ def main(event, context):
                     found = True
 
             if not found:
-                create_key(bucket_name, site)
+                upload(bucket_name, site)
 
-            logging.info("\tBloopy bloop.")
-                
-def create_key(bucket, key):
-    logging.info(f"Creating key {key} in bucket {bucket}.\n")
-    s3 = boto3.client('s3')
-    try:
-        s3.put_object(Bucket=bucket, Key=key)
-    except botocore.exceptions.ClientError as e:
-        logging.error(e)
-        return False
-    return True
-
+def upload(topic_arn,site):
+    logging.info(f"Publishing {site} to SNS topic.\n")
+    client = boto3.client('sns')
+    client.publish(TargetArn=topic_arn, Message=json.dumps({'bucket': site}), Subject=f"New site to check",MessageStructure='json')
 
 if __name__ == "__main__":
     main(None, None)
