@@ -16,8 +16,7 @@ resource "aws_iam_policy" "upload-write" {
         "sns:Publish"
       ],
       "Effect": "Allow",
-      "Resource": "${aws_sns_topic.upload.arn}",
-      "Principal": "*"
+      "Resource": "${aws_sns_topic.upload.arn}"
     }
   ]
 }
