@@ -1,6 +1,9 @@
 # Mac
 .DS_Store
 
+# Terraform
+infra/.terraform
+
 # Lambda packages
 lambda/dist/
 
