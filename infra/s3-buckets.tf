@@ -20,7 +20,7 @@ resource "aws_iam_policy" "buckets-write" {
     }
 ]
 }
-    EOF
+EOF
 }
 
 resource "aws_iam_policy" "buckets-read" {
@@ -44,5 +44,5 @@ resource "aws_iam_policy" "buckets-read" {
     }
 ]
 }
-    EOF
+EOF
 }

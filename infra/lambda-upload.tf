@@ -44,3 +44,11 @@ resource "aws_iam_role_policy_attachment" "attach-upload-buckets-write" {
     role = aws_iam_role.exec_upload.name
     policy_arn = aws_iam_policy.buckets-write.arn
 }
+
+resource "aws_lambda_permission" "upload-sns" {
+  statement_id  = "AllowExecutionFromSNS"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.upload.function_name
+  principal     = "sns.amazonaws.com"
+  source_arn    = aws_sns_topic.upload.arn
+}

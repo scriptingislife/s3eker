@@ -8,10 +8,10 @@ resource "aws_lambda_function" "ingest-urlscan" {
 
     handler         = "main.main"
     runtime         = "python3.7"
-    role            = aws_iam_role.exec_ingest-urlscan.arn
+    role            = aws_iam_role.exec-ingest-urlscan.arn
 }
 
-resource "aws_iam_role" "exec_ingest-urlscan" { 
+resource "aws_iam_role" "exec-ingest-urlscan" { 
   name                = "s3eker-lambda-ingest-urlscan"
   assume_role_policy  = <<EOF
 {
@@ -31,13 +31,18 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "attach-ingest-urlscan-lambda-execute" {
-  role = aws_iam_role.exec_ingest-urlscan.name
+  role = aws_iam_role.exec-ingest-urlscan.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 resource "aws_iam_role_policy_attachment" "attach-ingest-urlscan-buckets-read" {
-    role = aws_iam_role.exec_ingest-urlscan.name
-    policy_arn = aws_iam_policy.buckets-read.arn
+  role = aws_iam_role.exec-ingest-urlscan.name
+  policy_arn = aws_iam_policy.buckets-read.arn
+}
+
+resource "aws_iam_role_policy_attachment" "attach-ingest-urlscan-upload-write" {
+  role = aws_iam_role.exec-ingest-urlscan.name
+  policy_arn = aws_iam_policy.upload-write.arn
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_s3eker_ingest-urlscan" {
