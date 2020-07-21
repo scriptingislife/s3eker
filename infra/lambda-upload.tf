@@ -36,13 +36,13 @@ resource "aws_iam_role_policy_attachment" "attach-upload-lambda-execute" {
 }
 
 resource "aws_iam_role_policy_attachment" "attach-upload-buckets-read" {
-    role = aws_iam_role.exec_upload.name
-    policy_arn = aws_iam_policy.buckets-read.arn
+  role = aws_iam_role.exec_upload.name
+  policy_arn = aws_iam_policy.buckets-read.arn
 }
 
 resource "aws_iam_role_policy_attachment" "attach-upload-buckets-write" {
-    role = aws_iam_role.exec_upload.name
-    policy_arn = aws_iam_policy.buckets-write.arn
+  role = aws_iam_role.exec_upload.name
+  policy_arn = aws_iam_policy.buckets-write.arn
 }
 
 resource "aws_lambda_permission" "upload-sns" {
@@ -51,4 +51,10 @@ resource "aws_lambda_permission" "upload-sns" {
   function_name = aws_lambda_function.upload.function_name
   principal     = "sns.amazonaws.com"
   source_arn    = aws_sns_topic.upload.arn
+}
+
+resource "aws_sns_topic_subscription" "upload-sub" {
+  topic_arn = aws_sns_topic.upload.arn
+  protocol = "lambda"
+  endpoint = aws_lambda_function.upload.arn
 }

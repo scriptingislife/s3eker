@@ -1,12 +1,10 @@
 import requests
 import logging
 import boto3
-import botocore
 import json
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.INFO)
-
 
 def main(event, context):
     # Gather URLScan.io results for scans with a request to s3-website domains.
@@ -14,8 +12,8 @@ def main(event, context):
     if req_results.status_code != 200:
         logging.error("Bad request.")
 
-    s3 = boto3.client('s3')
-    bucket_name = "s3eker-buckets"
+    client = boto3.client('sns')
+    sns_arn = "arn:aws:sns:us-east-1:358663747217:s3eker-upload"
 
     results = req_results.json()
     logging.info("Running through search results.")
@@ -31,23 +29,11 @@ def main(event, context):
         s3_sites = [domain for domain in domains if "s3-website" in domain]
         logging.info(f"Made list of s3 domains. {s3_sites}")
         for site in s3_sites:
-            logging.info("Checking if domain exists in bucket.")
-            # https://stackoverflow.com/questions/33842944/check-if-a-key-exists-in-a-bucket-in-s3-using-boto3
-            
-            logging.info(f"Loading object {site}")
-            response = s3.list_objects_v2(Bucket=bucket_name, Prefix=site)
-            found = False
-            for obj in response.get('Contents', []):
-                if obj['Key'] == site:
-                    found = True
+            upload(client, sns_arn, site)
 
-            if not found:
-                upload(bucket_name, site)
-
-def upload(topic_arn,site):
+def upload(client, topic_arn,site):
     logging.info(f"Publishing {site} to SNS topic.\n")
-    client = boto3.client('sns')
-    client.publish(TargetArn=topic_arn, Message=json.dumps({'bucket': site}), Subject=f"New site to check",MessageStructure='json')
+    client.publish(TargetArn=topic_arn, Message=json.dumps({'default': json.dumps({'bucket': site}), 'sms':site, 'email':site}), Subject=f"New site to check",MessageStructure='json')
 
 if __name__ == "__main__":
     main(None, None)
