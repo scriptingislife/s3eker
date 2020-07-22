@@ -10,7 +10,9 @@ logging.getLogger().setLevel(logging.INFO)
 
 def main(event, context):
     sns_event = event["Records"][0]["Sns"]
-    bucket = json.loads(sns_event["Message"])["bucket"]
+    sns_message = json.loads(sns_event["Message"])
+    logging.info("SNS Message is " + sns_message)
+    bucket = sns_message["bucket"]
 
     s3 = boto3.client('s3')
     bucket_name = "s3eker-buckets"
