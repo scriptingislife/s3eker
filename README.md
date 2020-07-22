@@ -1,6 +1,6 @@
 # s3eker <img src="res/icon.png" alt="icon" width="32"/>
 
-s3eker is an extensible way to find open S3 buckets. There are no limits on what can be used to ingest bucket names as long as it has a way to publish to the AWS SNS topic (REST API, CLI, SDK). Almost all of the infrastructure can be created using Terraform.
+s3eker is an extensible way to find open S3 buckets and notify via Slack. There are no limits on what can be used to ingest bucket names as long as it has a way to publish to the AWS SNS topic (REST API, CLI, SDK). Almost all of the infrastructure can be created using Terraform.
 
 <img src="res/notif.png" alt="notification" width="200"/>
 
