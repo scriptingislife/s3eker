@@ -8,12 +8,12 @@ mkdir dist 2>/dev/null
 for D in */
 do
     FUNCTION_NAME="${D%%/}" # Remove slash at end of dir name. dir/ to dir
-    if [ "$FUNCTION_NAME" == "dist" ]
+    if [ "$FUNCTION_NAME" = "dist" ] || [ "$FUNCTION_NAME" = "ingest-example" ] # Ignore some directories
     then
         continue
     fi
 
-    TARGET_DIR="./dist/$D"
+    TARGET_DIR="./dist/$D" # Place to put code before zipping.
 
     echo "Packing $D"
     
@@ -32,6 +32,8 @@ do
     if zip -r "$ZIP_FILE"  *; then
         echo "Successfully zipped $FUNCTION_NAME"
         aws s3 cp "$ZIP_FILE" "s3://$LAMBDA_BUCKET/$FUNCTION_NAME/$ZIP_FILENAME"
+
+        # Update Lambda function with new code.
         aws lambda update-function-code --function-name "s3eker-$FUNCTION_NAME" --s3-bucket $LAMBDA_BUCKET --s3-key "$FUNCTION_NAME/$ZIP_FILENAME" > /dev/null
     fi    
     
