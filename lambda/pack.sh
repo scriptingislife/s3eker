@@ -15,10 +15,18 @@ do
 
     TARGET_DIR="./dist/$D" # Place to put code before zipping.
 
+    echo
+    #echo -e "\e[31mPacking $D\e[0m"
     echo "Packing $D"
     
     # Install dependencies in dist/FUNCTION_NAME/
     cp -r "$D" "$TARGET_DIR"
+
+    if [[ "$FUNCTION_NAME" == ingest-* ]];
+    then
+        cp uploader.py "$TARGET_DIR"
+    fi
+
     if [ -f "$FUNCTION_NAME/requirements.txt" ]; then
         pip3 install -r "$FUNCTION_NAME/requirements.txt" --target "$TARGET_DIR"
     fi

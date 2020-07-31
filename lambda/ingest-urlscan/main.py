@@ -1,3 +1,4 @@
+from uploader import upload
 import requests
 import logging
 import boto3
@@ -30,10 +31,6 @@ def main(event, context):
         logging.info(f"Made list of s3 domains. {s3_sites}")
         for site in s3_sites:
             upload(client, sns_arn, site)
-
-def upload(client, topic_arn,site):
-    logging.info(f"Publishing {site} to SNS topic.\n")
-    client.publish(TargetArn=topic_arn, Message=json.dumps({'default': json.dumps({'bucket': site}), 'sms':site, 'email':site}), Subject=f"New site to check",MessageStructure='json')
 
 if __name__ == "__main__":
     main(None, None)

@@ -1,3 +1,4 @@
+from uploader import upload
 import requests
 import logging
 import boto3
@@ -12,10 +13,6 @@ def main(event, context):
 
     site = "example.com.s3-website-us-east-1.amazonaws.com"
     upload(client, sns_arn, site)
-
-def upload(client, topic_arn,site):
-    logging.info(f"Publishing {site} to SNS topic.\n")
-    client.publish(TargetArn=topic_arn, Message=json.dumps({'default': json.dumps({'bucket': site}), 'sms':site, 'email':site}), Subject=f"New site to check",MessageStructure='json')
 
 if __name__ == "__main__":
     main(None, None)
